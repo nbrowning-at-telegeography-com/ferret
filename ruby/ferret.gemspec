@@ -1,3 +1,11 @@
+require 'rake'
+require 'rake/clean'
+require 'rubygems/package_task'
+require 'rdoc/task'
+require 'rake/testtask'
+
+$:. << 'lib'
+require 'ferret/version'
 
 spec = Gem::Specification.new do |s|
 
