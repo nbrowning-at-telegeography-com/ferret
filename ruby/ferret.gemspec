@@ -75,14 +75,7 @@ spec = Gem::Specification.new do |s|
     '--title' <<  'Ferret -- Ruby Search Library' <<
     '--main' << 'README' << '--line-numbers' <<
     'TUTORIAL' << 'TODO'
-
-  if windows
-    s.files = PKG_FILES.to_a + ["ext/#{EXT}"]
-    s.extensions.clear
-    s.platform = Gem::Platform::WIN32
-  else
-    s.platform = Gem::Platform::RUBY
-  end
+  s.platform = Gem::Platform::RUBY
 end
 
 package_task = Gem::PackageTask.new(spec) do |pkg|
