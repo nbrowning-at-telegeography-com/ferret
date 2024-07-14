@@ -60,7 +60,7 @@ spec = Gem::Specification.new do |s|
   s.require_path = 'lib'
   s.bindir = 'bin'
   s.executables = ['ferret-browser']
-  s.default_executable = 'ferret-browser'
+  # s.default_executable = 'ferret-browser'
 
   #### Author and project details.
   s.author = "David Balmain"
@@ -69,7 +69,7 @@ spec = Gem::Specification.new do |s|
   s.homepage = "http://github.com/jkraemer/ferret"
   s.rubyforge_project = "ferret"
 
-  s.has_rdoc = true
+  # s.has_rdoc = true
   # s.extra_rdoc_files = $rd.rdoc_files.reject { |fn| fn =~ /\.rb$/ }.to_a
   s.rdoc_options <<
     '--title' <<  'Ferret -- Ruby Search Library' <<
@@ -79,8 +79,6 @@ spec = Gem::Specification.new do |s|
 end
 
 package_task = Gem::PackageTask.new(spec) do |pkg|
-  unless windows
-    pkg.need_zip = true
-    pkg.need_tar = true
-  end
+  pkg.need_zip = true
+  pkg.need_tar = true
 end
