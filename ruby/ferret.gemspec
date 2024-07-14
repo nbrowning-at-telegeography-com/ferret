@@ -70,7 +70,7 @@ spec = Gem::Specification.new do |s|
   s.rubyforge_project = "ferret"
 
   s.has_rdoc = true
-  s.extra_rdoc_files = $rd.rdoc_files.reject { |fn| fn =~ /\.rb$/ }.to_a
+  # s.extra_rdoc_files = $rd.rdoc_files.reject { |fn| fn =~ /\.rb$/ }.to_a
   s.rdoc_options <<
     '--title' <<  'Ferret -- Ruby Search Library' <<
     '--main' << 'README' << '--line-numbers' <<
