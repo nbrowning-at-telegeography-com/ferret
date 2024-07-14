@@ -7,6 +7,44 @@ require 'rake/testtask'
 $:. << 'lib'
 require 'ferret/version'
 
+EXT_SRC = FileList["../c/src/*.[ch]", "../c/include/*.h",
+                   "../c/lib/bzlib/*.[ch]",
+                   "../c/lib/libstemmer_c/src_c/*.[ch]",
+                   "../c/lib/libstemmer_c/runtime/*.[ch]",
+                   "../c/lib/libstemmer_c/libstemmer/*.[ch]",
+                   "../c/lib/libstemmer_c/include/libstemmer.[h]"]
+EXT_SRC.exclude('../c/**/ind.[ch]',
+                '../c/**/symbol.[ch]',
+                '../c/include/threading.h',
+                '../c/include/scanner.h',
+                '../c/include/internal.h',
+                '../c/src/lang.c',
+                '../c/include/lang.h')
+
+EXT_SRC_MAP = {}
+EXT_SRC_DEST = EXT_SRC.map do |fn|
+  ext_fn = File.join("ext", File.basename(fn))
+  if fn =~ /.c$/ and fn =~ /(bzlib|stemmer)/
+    prefix = $1.upcase
+    ext_fn.gsub!(/ext\//, "ext/#{prefix}_")
+  end
+  EXT_SRC_MAP[fn] = ext_fn
+end
+SRC = FileList["ext/*.[ch]", EXT_SRC_DEST, 'ext/internal.h'].uniq
+
+PKG_FILES = FileList[
+  '[-A-Z]*',
+  'lib/**/*.rb',
+  'lib/**/*.rhtml',
+  'lib/**/*.css',
+  'lib/**/*.js',
+  'test/**/*.rb',
+  'test/**/wordfile',
+  'rake_utils/**/*.rb',
+  'Rakefile',
+  SRC
+]
+
 spec = Gem::Specification.new do |s|
 
   #### Basic information.
@@ -14,45 +52,6 @@ spec = Gem::Specification.new do |s|
   s.version = Ferret::VERSION
   s.summary = "Ruby indexing library."
   s.description = "Ferret is a super fast, highly configurable search library."
-  
-  EXT_SRC = FileList["../c/src/*.[ch]", "../c/include/*.h",
-                     "../c/lib/bzlib/*.[ch]",
-                     "../c/lib/libstemmer_c/src_c/*.[ch]",
-                     "../c/lib/libstemmer_c/runtime/*.[ch]",
-                     "../c/lib/libstemmer_c/libstemmer/*.[ch]",
-                     "../c/lib/libstemmer_c/include/libstemmer.[h]"]
-  EXT_SRC.exclude('../c/**/ind.[ch]',
-                  '../c/**/symbol.[ch]',
-                  '../c/include/threading.h',
-                  '../c/include/scanner.h',
-                  '../c/include/internal.h',
-                  '../c/src/lang.c',
-                  '../c/include/lang.h')
-
-  EXT_SRC_MAP = {}
-  EXT_SRC_DEST = EXT_SRC.map do |fn|
-    ext_fn = File.join("ext", File.basename(fn))
-    if fn =~ /.c$/ and fn =~ /(bzlib|stemmer)/
-      prefix = $1.upcase
-      ext_fn.gsub!(/ext\//, "ext/#{prefix}_")
-    end
-    EXT_SRC_MAP[fn] = ext_fn
-  end
-  SRC = FileList["ext/*.[ch]", EXT_SRC_DEST, 'ext/internal.h'].uniq
-  
-  PKG_FILES = FileList[
-    '[-A-Z]*',
-    'lib/**/*.rb',
-    'lib/**/*.rhtml',
-    'lib/**/*.css',
-    'lib/**/*.js',
-    'test/**/*.rb',
-    'test/**/wordfile',
-    'rake_utils/**/*.rb',
-    'Rakefile',
-    SRC
-  ]
-  
   #### Dependencies and requirements.
   s.add_development_dependency('rake')
   s.files = PKG_FILES.to_a
