@@ -78,7 +78,7 @@ spec = Gem::Specification.new do |s|
   s.platform = Gem::Platform::RUBY
 end
 
-package_task = Gem::PackageTask.new(spec) do |pkg|
-  pkg.need_zip = true
-  pkg.need_tar = true
-end
+# package_task = Gem::PackageTask.new(spec) do |pkg|
+#   pkg.need_zip = true
+#   pkg.need_tar = true
+# end
