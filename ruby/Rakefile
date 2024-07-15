@@ -229,6 +229,7 @@ PKG_FILES = FileList[
   'test/**/wordfile',
   'rake_utils/**/*.rb',
   'Rakefile',
+  'ferret.gemspec',
   SRC
 ]
 
