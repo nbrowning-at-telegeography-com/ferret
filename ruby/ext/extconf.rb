@@ -9,7 +9,7 @@ elsif ENV['FERRET_DEV']
   create_makefile("ferret_ext")
 else
   require 'mkmf'
-  if (/^arm64-darwin/ =~ RUBY_PLATFORM)
+  if (/^arm64-darwin|^x86_64-darwin/ =~ RUBY_PLATFORM)
     $CFLAGS += " -Wall -D_FILE_OFFSET_BITS=64 -D_XOPEN_SOURCE=500 -Wno-incompatible-pointer-types"
   else
     $CFLAGS += " -Wall -D_FILE_OFFSET_BITS=64 -D_XOPEN_SOURCE=500"
